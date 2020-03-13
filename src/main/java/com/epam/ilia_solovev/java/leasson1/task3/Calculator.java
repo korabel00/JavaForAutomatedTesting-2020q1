@@ -95,6 +95,6 @@ public class Calculator {
     }
 
     private void outputResult() {
-        System.out.println(mathResult);
+        System.out.println("The result is: " + mathResult);
     }
 }
