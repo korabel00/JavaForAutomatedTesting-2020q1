@@ -17,9 +17,9 @@ public class SortArray {
         }
     }
 
-    private static void swap (HomeAppliances[] array, int inddexOne, int indexTwo) {
-        HomeAppliances temp = array[inddexOne];
-        array[inddexOne] = array[indexTwo];
+    private static void swap (HomeAppliances[] array, int indexOne, int indexTwo) {
+        HomeAppliances temp = array[indexOne];
+        array[indexOne] = array[indexTwo];
         array[indexTwo] = temp;
     }
 }
