@@ -11,8 +11,7 @@
 package com.epam.ilia_solovev.java.lesson2.task1;
 
 import com.epam.ilia_solovev.java.lesson2.task1.home_appliances.*;
-import com.epam.ilia_solovev.java.lesson2.task1.utils.Brand;
-import com.epam.ilia_solovev.java.lesson2.task1.utils.SortArray;
+import com.epam.ilia_solovev.java.lesson2.task1.utils.*;
 
 public class RunHomeAppliance {
 

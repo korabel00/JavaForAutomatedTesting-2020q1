@@ -5,7 +5,7 @@
  * строки. Вывести найденные строки и их длину.
  */
 
-package com.epam.ilia_solovev.java.leasson1.task2;
+package com.epam.ilia_solovev.java.lesson1.task2;
 
 import java.util.Scanner;
 

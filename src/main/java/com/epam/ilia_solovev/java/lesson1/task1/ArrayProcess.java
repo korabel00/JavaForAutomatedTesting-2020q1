@@ -11,10 +11,7 @@
  * отрицательный элемент и минимальный положительный.
  */
 
-package com.epam.ilia_solovev.java.leasson1.task1;
-
-import net.bytebuddy.pool.TypePool;
-import org.openqa.selenium.json.JsonOutput;
+package com.epam.ilia_solovev.java.lesson1.task1;
 
 public class ArrayProcess {
 
@@ -74,6 +71,4 @@ public class ArrayProcess {
             System.out.print(arrayOfInt + " ");
         }
     }
-
-
 }

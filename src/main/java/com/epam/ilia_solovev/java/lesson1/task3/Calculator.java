@@ -9,7 +9,7 @@
  * пользовательское меню для выбора необходимой операции. Ввод входных данных осуществлять с клавиатуры
  */
 
-package com.epam.ilia_solovev.java.leasson1.task3;
+package com.epam.ilia_solovev.java.lesson1.task3;
 
 import java.util.Scanner;
 
