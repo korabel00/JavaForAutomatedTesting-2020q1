@@ -1,6 +1,6 @@
 /*
  * Ilia Solovev. Task 1-1
- * <p>
+ *
  * Написать программу, осуществляющую обработку массива. Исходные
  * условия: массив содержит только целые числа от -10 до 10 (допускается
  * генерация элементов с помощью метода (int) Math.random()), программа
@@ -12,6 +12,9 @@
  */
 
 package com.epam.ilia_solovev.java.leasson1.task1;
+
+import net.bytebuddy.pool.TypePool;
+import org.openqa.selenium.json.JsonOutput;
 
 public class ArrayProcess {
 
@@ -67,8 +70,10 @@ public class ArrayProcess {
     private void outputResult() {
 
         System.out.println();
-        for (int i = 0; i < arrayOfInts.length; i++) {
-            System.out.print(arrayOfInts[i] + " ");
+        for (int arrayOfInt : arrayOfInts) {
+            System.out.print(arrayOfInt + " ");
         }
     }
+
+
 }

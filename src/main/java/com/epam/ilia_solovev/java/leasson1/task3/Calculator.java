@@ -1,6 +1,6 @@
 /*
  * Ilia Solovev. Task 3
- * <p>
+ *
  * Написать калькулятор – программа, которая на входе получает два целых
  * числа (число А и число В), выполняет арифметическую операцию («+» -
  * сложение, «-» - вычитание, «*» - умножение, «/» - деление) и выводит результат в
@@ -95,6 +95,6 @@ public class Calculator {
     }
 
     private void outputResult() {
-        System.out.println(mathResult);
+        System.out.println("The result is: " + mathResult);
     }
 }
