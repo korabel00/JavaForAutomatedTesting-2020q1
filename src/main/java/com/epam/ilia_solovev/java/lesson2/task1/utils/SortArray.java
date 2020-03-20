@@ -17,11 +17,20 @@ public class SortArray {
                 }
             }
         }
+        output(array);
     }
 
     private static void swap(HomeAppliances[] array, int indexOne, int indexTwo) {
         HomeAppliances temp = array[indexOne];
         array[indexOne] = array[indexTwo];
         array[indexTwo] = temp;
+    }
+
+    private static void output(HomeAppliances[] array) {
+    //And output the result with class names
+        System.out.println("Sorted list of home appliances by power consumption (ascending):");
+        for (HomeAppliances thing : array) {
+            System.out.println(thing.getClass().getSimpleName());
+        }
     }
 }

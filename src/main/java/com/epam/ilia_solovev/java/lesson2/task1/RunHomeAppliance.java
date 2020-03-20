@@ -23,26 +23,14 @@ public class RunHomeAppliance {
     //Running an application
     public void startApp() {
 
-        int currentPowerConsumption;
         int powerLessOrEqual = 300;
 
         HomeAppliances[] homeAppliances = new HomeAppliances[3];
         createArrayOfHomeAppliance(homeAppliances);
-        currentPowerConsumption = makeThemWorkAndCountPowerConsumption(homeAppliances);
-
-        // 600 is because the washing machine turned off automatically after finishing its work.
-        System.out.println("Current power consumption is : " + currentPowerConsumption);
-
+        makeThemWorkAndShowPowerConsumption(homeAppliances);
         showThingsWithPowerLessOrEqualThanParam(homeAppliances, powerLessOrEqual);
-
         //Lets sort home appliances by power consumption
         SortArray.bubbleSortByPowerConsumption(homeAppliances);
-
-        //And output the result with class names
-        System.out.println("Sorted list of home appliances by power consumption (ascending):");
-        for (HomeAppliances thing : homeAppliances) {
-            System.out.println(thing.getClass().getSimpleName());
-        }
     }
 
     private void createArrayOfHomeAppliance(HomeAppliances[] homeAppliances) {
@@ -56,7 +44,7 @@ public class RunHomeAppliance {
         homeAppliances[2] = computer;
     }
 
-    private int makeThemWorkAndCountPowerConsumption(HomeAppliances[] homeAppliances) {
+    private void makeThemWorkAndShowPowerConsumption(HomeAppliances[] homeAppliances) {
 
         int currentPowerConsumption = 0;
 
@@ -71,7 +59,9 @@ public class RunHomeAppliance {
             //counting current home power consumption
             currentPowerConsumption += thing.getPowerConsumptionWhenOn();
         }
-        return currentPowerConsumption;
+
+        System.out.println("Current power consumption is : " + currentPowerConsumption);
+        // 600 is because the washing machine turned off automatically after finishing its work.
     }
 
     private void showThingsWithPowerLessOrEqualThanParam(HomeAppliances[] homeAppliances, int powerLessOrEqualThanThat) {
