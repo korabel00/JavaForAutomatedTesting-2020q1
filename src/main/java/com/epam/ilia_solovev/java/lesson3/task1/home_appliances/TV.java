@@ -1,6 +1,8 @@
 package com.epam.ilia_solovev.java.lesson3.task1.home_appliances;
 
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceIsOffException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.WrongScreenSizeException;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
 
 public class TV extends HomeAppliances implements Connectible {
@@ -8,12 +10,12 @@ public class TV extends HomeAppliances implements Connectible {
     private int screenSize;
     private int defaultScreenSize = 32;
 
-    public TV(int powerConsumption, Brand brand, String model, int screenSize) throws ApplianceException {
+    public TV(int powerConsumption, Brand brand, String model, int screenSize) throws WrongScreenSizeException {
         super(powerConsumption, brand, model);
 
         if (screenSize <= 0) {
             try {
-                throw new ApplianceException();
+                throw new WrongScreenSizeException();
             } finally {
                 this.screenSize = defaultScreenSize;
             }
@@ -29,9 +31,9 @@ public class TV extends HomeAppliances implements Connectible {
                     " inches screen, isn't?");
         } else {
             try {
-                throw new ApplianceException();
-            } catch (ApplianceException e) {
-                e.turnMeOnException(this);
+                throw new ApplianceIsOffException();
+            } catch (ApplianceIsOffException e) {
+                e.showTurnMeOnMessage(this);
             } finally {
                 this.turnOn();
             }

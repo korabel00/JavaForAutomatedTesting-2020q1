@@ -1,6 +1,7 @@
 package com.epam.ilia_solovev.java.lesson3.task1.home_appliances;
 
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceIsOffException;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
 
 import java.sql.SQLOutput;
@@ -20,9 +21,9 @@ public class WashingMachine extends HomeAppliances {
             System.out.println("I'm a Washing Machine - Washing your cloth with " + rpm + " RPM.");
         } else {
             try {
-                throw new ApplianceException();
-            } catch (ApplianceException e) {
-                System.out.println(e.turnMeOnException(this));
+                throw new ApplianceIsOffException();
+            } catch (ApplianceIsOffException e) {
+                System.out.println(e.showTurnMeOnMessage(this));
             } finally {
                 this.turnOn();
             }

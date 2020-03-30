@@ -1,6 +1,7 @@
 package com.epam.ilia_solovev.java.lesson3.task1.home_appliances;
 
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ZeroPowerException;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Colorable;
 
@@ -21,9 +22,9 @@ public abstract class HomeAppliances implements Colorable {
 
         if (powerConsumption <= 0) {
             try {
-                throw new ApplianceException();
-            } catch (ApplianceException e) {
-                System.out.println(e.messageIfPowerIsZero(this, defaultPower));
+                throw new ZeroPowerException();
+            } catch (ZeroPowerException e) {
+                System.out.println(e.showMessageIfPowerIsZero(this, defaultPower));
             } finally {
                 powerConsumption = defaultPower; //default power
             }

@@ -24,6 +24,8 @@
 package com.epam.ilia_solovev.java.lesson3.task1;
 
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.BadCompareException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.WrongScreenSizeException;
 import com.epam.ilia_solovev.java.lesson3.task1.home_appliances.*;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Colorable;
@@ -55,8 +57,8 @@ public class RunHomeAppliance implements Colorable {
             // 3 case of exceptions (Unchecked)- trying to put 4th elements into array of 3
             // If you set screen siz > 0 than ArrayIndexOutOfBoundsException will work
             homeAppliances[3] = tvLG;
-        } catch (ApplianceException e) {
-            System.out.println(e.wrongScreenSize());
+        } catch (WrongScreenSizeException e) {
+            System.out.println(e.showWrongScreenSizeMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(ANSI_RED + "You are trying to add an appliance, but there is no place for it: " +
                     e.getMessage() + ANSI_RESET);
@@ -102,7 +104,7 @@ public class RunHomeAppliance implements Colorable {
             //counting current home power consumption
             currentPowerConsumption += thing.getPowerConsumptionWhenOn();
         }
-        System.out.println("Showing you power consumption of all home...");
+        System.out.println(ANSI_BLUE + "Showing you power consumption of all home..." + ANSI_RESET);
         System.out.println("Current power consumption is : " + currentPowerConsumption);
     }
 
@@ -123,9 +125,9 @@ public class RunHomeAppliance implements Colorable {
 
         if (count == 0) {
             try {
-                throw new ApplianceException();
-            } catch (ApplianceException e) {
-                System.out.println(e.messageForBadCompare(powerToCompare));
+                throw new BadCompareException();
+            } catch (BadCompareException e) {
+                System.out.println(e.showMessageIfBadCompare(powerToCompare));
             }
         }
     }
