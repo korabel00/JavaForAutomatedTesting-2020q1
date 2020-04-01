@@ -29,9 +29,9 @@ public class SortArray {
     private static void output(HomeAppliances[] array) {
         //And output the result with class names
         System.out.println("Sorted list of home appliances by power consumption (ascending):");
-        for (HomeAppliances thing : array) {
-            System.out.println(thing.getClass().getSimpleName() + " " + thing.getBrand() + " " + thing.getModel() + ", power: "
-                    + thing.getPowerConsumption());
+        for (HomeAppliances appliances : array) {
+            System.out.println(appliances.getClass().getSimpleName() + " " + appliances.getBrand() + " " + appliances.getModel() + ", power: "
+                    + appliances.getPowerConsumption());
         }
     }
 }

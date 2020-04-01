@@ -1,8 +1,10 @@
 package com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked;
 
-final public class WrongScreenSizeException extends ApplianceException {
+import com.epam.ilia_solovev.java.lesson3.task1.utils.Color;
 
-    public String showWrongScreenSizeMessage() {
-        return ANSI_RED + "Wrong screen size of a TV" + ANSI_RESET;
+final public class WrongScreenSizeException extends Checked {
+
+    public void showWrongScreenSizeMessage() {
+        System.out.println(Color.ANSI_RED.getCode() + "Wrong screen size of a TV" + Color.ANSI_RESET.getCode());
     }
 }

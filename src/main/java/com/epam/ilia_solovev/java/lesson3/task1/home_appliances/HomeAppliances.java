@@ -1,11 +1,10 @@
 package com.epam.ilia_solovev.java.lesson3.task1.home_appliances;
 
-import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ZeroPowerException;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
-import com.epam.ilia_solovev.java.lesson3.task1.utils.Colorable;
+import com.epam.ilia_solovev.java.lesson3.task1.utils.Color;
 
-public abstract class HomeAppliances implements Colorable {
+public abstract class HomeAppliances {
 
     private int powerConsumption;
     private int powerConsumptionWhenOn;
@@ -17,14 +16,14 @@ public abstract class HomeAppliances implements Colorable {
 
         int defaultPower = 10;
 
-        System.out.println(ANSI_GREEN + "Creating " + this.getClass().getSimpleName() + " " + brand + " " + model + " Power: " +
-                powerConsumption + "..." + ANSI_RESET);
+        System.out.println(Color.ANSI_GREEN.getCode() + "Creating " + this.getClass().getSimpleName() + " " + brand + " " + model + " Power: " +
+                powerConsumption + "..." + Color.ANSI_RESET.getCode());
 
         if (powerConsumption <= 0) {
             try {
                 throw new ZeroPowerException();
             } catch (ZeroPowerException e) {
-                System.out.println(e.showMessageIfPowerIsZero(this, defaultPower));
+                e.showMessageIfPowerIsZero(this, defaultPower);
             } finally {
                 powerConsumption = defaultPower; //default power
             }
@@ -36,13 +35,15 @@ public abstract class HomeAppliances implements Colorable {
 
     public void turnOn() {
         this.on = true;
-        System.out.println(ANSI_YELLOW + this.getClass().getSimpleName() + " is turning on..." + ANSI_RESET);
+        System.out.println(Color.ANSI_YELLOW.getCode() + this.getClass().getSimpleName() + " is turning on..." +
+                Color.ANSI_RESET.getCode());
         this.powerConsumptionWhenOn = powerConsumption;
     }
 
     public void turnOff() {
         this.on = false;
-        System.out.println(ANSI_BLACK + this.getClass().getSimpleName() + " is turning off..." + ANSI_RESET);
+        System.out.println(Color.ANSI_BLACK.getCode() + this.getClass().getSimpleName() + " is turning off..." +
+                Color.ANSI_RESET.getCode());
         this.powerConsumptionWhenOn = 0;
     }
 

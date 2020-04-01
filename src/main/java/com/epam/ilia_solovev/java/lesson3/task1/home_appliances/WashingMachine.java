@@ -1,10 +1,7 @@
 package com.epam.ilia_solovev.java.lesson3.task1.home_appliances;
 
-import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceIsOffException;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
-
-import java.sql.SQLOutput;
 
 public class WashingMachine extends HomeAppliances {
 
@@ -23,7 +20,7 @@ public class WashingMachine extends HomeAppliances {
             try {
                 throw new ApplianceIsOffException();
             } catch (ApplianceIsOffException e) {
-                System.out.println(e.showTurnMeOnMessage(this));
+                e.showTurnMeOnMessage(this);
             } finally {
                 this.turnOn();
             }

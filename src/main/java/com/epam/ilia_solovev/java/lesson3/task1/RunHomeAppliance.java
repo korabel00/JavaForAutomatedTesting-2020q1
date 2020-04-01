@@ -23,15 +23,15 @@
 
 package com.epam.ilia_solovev.java.lesson3.task1;
 
-import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceException;
+import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceIsOffException;
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.BadCompareException;
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.WrongScreenSizeException;
 import com.epam.ilia_solovev.java.lesson3.task1.home_appliances.*;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.Brand;
-import com.epam.ilia_solovev.java.lesson3.task1.utils.Colorable;
+import com.epam.ilia_solovev.java.lesson3.task1.utils.Color;
 import com.epam.ilia_solovev.java.lesson3.task1.utils.SortArray;
 
-public class RunHomeAppliance implements Colorable {
+public class RunHomeAppliance {
 
     public static void main(String[] args) {
         RunHomeAppliance app = new RunHomeAppliance();
@@ -58,10 +58,10 @@ public class RunHomeAppliance implements Colorable {
             // If you set screen siz > 0 than ArrayIndexOutOfBoundsException will work
             homeAppliances[3] = tvLG;
         } catch (WrongScreenSizeException e) {
-            System.out.println(e.showWrongScreenSizeMessage());
+            e.showWrongScreenSizeMessage();
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(ANSI_RED + "You are trying to add an appliance, but there is no place for it: " +
-                    e.getMessage() + ANSI_RESET);
+            System.out.println(Color.ANSI_RED.getCode() + "You are trying to add an appliance, but there is no place for it: " +
+                    e.getMessage() + Color.ANSI_RESET.getCode());
         }
 
         // 4 case of exceptions (Checked)- you cannot make appliance work if it is not turned ON.
@@ -78,8 +78,8 @@ public class RunHomeAppliance implements Colorable {
         TV tv = null;
         try {
             tv = new TV(powerOfThings[0], Brand.Samsung, "UE50NU7097U", 47);
-        } catch (ApplianceException e) {
-            e.printStackTrace();
+        } catch (WrongScreenSizeException e) {
+            e.showWrongScreenSizeMessage();
         }
         WashingMachine washingMachine = new WashingMachine(powerOfThings[1], Brand.Indesit, "IWUB 4085", 1000);
         Computer computer = new Computer(powerOfThings[2], Brand.DELL, "Vostro 3670");
@@ -93,18 +93,20 @@ public class RunHomeAppliance implements Colorable {
 
         int currentPowerConsumption = 0;
 
-        for (HomeAppliances thing : homeAppliances) {
-            //Every thing needs to be turned on - otherwise it won't work
-            thing.turnOn();
-            //Connecting every connectible thing to the WiFi
-            thing.doWork();
-            if (thing instanceof Connectible) {
-                ((Connectible) thing).connectToWiFi();
+        for (HomeAppliances appliance : homeAppliances) {
+            //Every appliance needs to be turned on - otherwise it won't work
+            appliance.turnOn();
+            //Connecting every connectible appliance to the WiFi
+            appliance.doWork();
+
+            if (appliance instanceof Connectible) {
+                ((Connectible) appliance).connectToWiFi();
             }
             //counting current home power consumption
-            currentPowerConsumption += thing.getPowerConsumptionWhenOn();
+            currentPowerConsumption += appliance.getPowerConsumptionWhenOn();
         }
-        System.out.println(ANSI_BLUE + "Showing you power consumption of all home..." + ANSI_RESET);
+        System.out.println(Color.ANSI_BLUE.getCode() + "Showing you power consumption of all home..." +
+                Color.ANSI_RESET.getCode());
         System.out.println("Current power consumption is : " + currentPowerConsumption);
     }
 
@@ -127,7 +129,7 @@ public class RunHomeAppliance implements Colorable {
             try {
                 throw new BadCompareException();
             } catch (BadCompareException e) {
-                System.out.println(e.showMessageIfBadCompare(powerToCompare));
+                e.showMessageIfBadCompare(powerToCompare);
             }
         }
     }
