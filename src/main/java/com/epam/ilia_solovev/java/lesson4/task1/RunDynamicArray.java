@@ -21,16 +21,29 @@ public class RunDynamicArray {
 
     public void startApp() {
 
-        int indexToGet = 3;
-        int indexToRemove = 10;
+        int indexToGet = 2;
+        int indexToRemove = 1;
 
-        DynamicArray dynamicArray = new DynamicArray();
-        dynamicArray.add("Last String"); //массив, поддерживающий добавление элемента в конец массива (add),
-        System.out.println(dynamicArray.getElement(indexToGet));//получение элемента по индексу (get),
-        dynamicArray.toString(); // печать внутреннего состояния (toString)
-        dynamicArray.remove(indexToRemove); //удаление произвольного элемента по индексу (remove)
-        DynamicArray dynamicArray100 = new DynamicArray(100); //возможность задать начальный размер
+        DynamicArray<String> dynamicArrayOfStrings = new DynamicArray<>();
+        dynamicArrayOfStrings.add("First String"); //массив, поддерживающий добавление элемента в конец массива (add)
+        dynamicArrayOfStrings.add("Middle String");
+        dynamicArrayOfStrings.add("Last String");
+        System.out.println(dynamicArrayOfStrings.getElement(indexToGet));//получение элемента по индексу (get)
+        System.out.println(dynamicArrayOfStrings.toString()); // печать внутреннего состояния (toString)
+        dynamicArrayOfStrings.remove(indexToRemove); //удаление произвольного элемента по индексу (remove)
+        System.out.println(dynamicArrayOfStrings.toString());
+        DynamicArray<String> dynamicArrayOfThreeStrings = new DynamicArray<>(3, new String[]{"Alex, Tomas, Victor"}); //возможность задать начальный размер
+        System.out.println(dynamicArrayOfThreeStrings.toString());
 
-
+        DynamicArray<Integer> dynamicArrayOfIntegers = new DynamicArray<>();
+        dynamicArrayOfIntegers.add(1); //массив, поддерживающий добавление элемента в конец массива (add),
+        dynamicArrayOfIntegers.add(2);
+        dynamicArrayOfIntegers.add(3);
+        System.out.println(dynamicArrayOfIntegers.getElement(indexToGet));//получение элемента по индексу (get),
+        System.out.println(dynamicArrayOfIntegers.toString()); // печать внутреннего состояния (toString)
+        dynamicArrayOfIntegers.remove(indexToRemove); //удаление произвольного элемента по индексу (remove)*/
+        System.out.println(dynamicArrayOfIntegers.toString());
+        DynamicArray<Integer> dynamicArrayOfThreeIntegers = new DynamicArray<>(3, new Integer[]{99,100,101}); //возможность задать начальный размер
+        System.out.println(dynamicArrayOfThreeIntegers.toString());
     }
 }
