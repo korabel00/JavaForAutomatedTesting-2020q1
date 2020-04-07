@@ -19,29 +19,42 @@ package com.epam.ilia_solovev.java.lesson4.task3;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class JavaCollectionStream {
 
-    public static void main(String[] args) {
+    private List<Integer> integerArrayList;
 
-        JavaCollectionStream app = new JavaCollectionStream();
-        app.startApp();
+    public void runCollection() {
+
+        integerArrayList = generateCollection();
+        integerArrayList = shuffleCollection(integerArrayList);
+        showOrder(integerArrayList);
+        showDistinct(integerArrayList);
+        findMin(integerArrayList);
+        integerArrayList = removeOdd(integerArrayList);
+        findPenultimate(integerArrayList);
     }
 
-    public void startApp() {
+    public List<Integer> generateCollection() {
 
-        /*1.Сгенерируйте 1 000 000 последовательных целых чисел
-        2.Создайте коллекцию A и вставьте туда элементы последовательности в произвольном порядке*/
-        List<Integer> integerArrayList = new ArrayList<>();
+        //1.Сгенерируйте 1 000 000 последовательных целых чисел
+        return IntStream
+                .range(1, 1_000_001)
+                .boxed()
+                .collect(Collectors.toList());
+    }
 
-        for (int i = 1; i <= 1_000_000; i++) {
-            integerArrayList.add(i);
-        }
+    public List<Integer> shuffleCollection(List<Integer> integerArrayList) {
 
+        //2.Создайте коллекцию A и вставьте туда элементы последовательности в произвольном порядке*/
         Collections.shuffle(integerArrayList);
+        return integerArrayList;
+    }
+
+    public void showOrder(List<Integer> integerArrayList) {
 
         //3. Покажите, что порядок произвольный
         System.out.print("First 10 elements are not in sequential order: ");
@@ -51,16 +64,25 @@ public class JavaCollectionStream {
                     System.out.print(a + ", ");
                 });
         System.out.println();
+    }
+
+    public void showDistinct(List<Integer> integerArrayList) {
 
         //4.Напишите проверку на то, что все элементы в данной коллекции A уникальны (докажите это каким-либо способом)
         System.out.println("Number of distinct elements is: " + integerArrayList.stream()
                 .distinct()
                 .count());
+    }
+
+    public void findMin(List<Integer> integerArrayList) {
 
         // 5.Найдите минимальный элемент в данной последовательности
         System.out.println("Min element is: " + integerArrayList.stream()
                 .min(Integer::compareTo)
                 .orElse(null));
+    }
+
+    public List<Integer> removeOdd(List<Integer> integerArrayList) {
 
         //6.Удалите все нечетные элементы из последовательности
         integerArrayList = integerArrayList.stream()
@@ -72,13 +94,15 @@ public class JavaCollectionStream {
         }
         System.out.println("and the size now is half of the original: " + integerArrayList.size());
 
+        return integerArrayList;
+    }
+
+    public void findPenultimate(List<Integer> integerArrayList) {
+
         //7.Найдите предпоследний по величине элемент
-
-        int count = (int) integerArrayList.stream().count();
-
         System.out.println("Penultimate element is: " + integerArrayList.stream()
                 .sorted()
-                .skip(count - 2)
+                .skip(integerArrayList.size() - 2)
                 .findFirst()
                 .orElse(null));
     }

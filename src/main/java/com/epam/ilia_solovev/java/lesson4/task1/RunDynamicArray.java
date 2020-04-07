@@ -16,10 +16,11 @@ public class RunDynamicArray {
     public static void main(String[] args) {
 
         RunDynamicArray app = new RunDynamicArray();
-        app.startApp();
+        app.startDynamicArrayOfStrings();
+        app.startDynamicArrayOfIntegers();
     }
 
-    public void startApp() {
+    public void startDynamicArrayOfStrings() {
 
         int indexToGet = 2;
         int indexToRemove = 1;
@@ -35,6 +36,13 @@ public class RunDynamicArray {
         DynamicArray<String> dynamicArrayOfThreeStrings = new DynamicArray<>(3, new String[]{"Alex, Tomas, Victor"}); //возможность задать начальный размер
         System.out.println(dynamicArrayOfThreeStrings.toString());
 
+    }
+
+    public void startDynamicArrayOfIntegers() {
+
+        int indexToGet = 0;
+        int indexToRemove = 2;
+
         DynamicArray<Integer> dynamicArrayOfIntegers = new DynamicArray<>();
         dynamicArrayOfIntegers.add(1); //массив, поддерживающий добавление элемента в конец массива (add),
         dynamicArrayOfIntegers.add(2);
@@ -43,7 +51,7 @@ public class RunDynamicArray {
         System.out.println(dynamicArrayOfIntegers.toString()); // печать внутреннего состояния (toString)
         dynamicArrayOfIntegers.remove(indexToRemove); //удаление произвольного элемента по индексу (remove)*/
         System.out.println(dynamicArrayOfIntegers.toString());
-        DynamicArray<Integer> dynamicArrayOfThreeIntegers = new DynamicArray<>(3, new Integer[]{99,100,101}); //возможность задать начальный размер
+        DynamicArray<Integer> dynamicArrayOfThreeIntegers = new DynamicArray<>(3, new Integer[]{99, 100, 101}); //возможность задать начальный размер
         System.out.println(dynamicArrayOfThreeIntegers.toString());
     }
 }
