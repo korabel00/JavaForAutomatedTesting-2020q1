@@ -23,19 +23,19 @@ public class RunDiskAnalyzer {
 
         DiskAnalyzer app = new DiskAnalyzer();
 
-        args = new String[]{"H:\\", "5"}; //Wrong path and function number case
-        app.runDiskAnalyzer(args);
+       /* args = new String[]{"H:\\", "5"};
+        app.runDiskAnalyzer(args); //Корректно обрабатывает некорректные пути или номера функций.*/
 
-        args = new String[]{"C:\\", "1"}; //
+        args = new String[]{"C:\\Windows\\System32\\", "1"};
         app.runDiskAnalyzer(args); // Поиск имени файла с максимальным количеством букв ‘s’ в имени, вывод пути к нему.
 
-        args = new String[]{"C:\\", "2"}; //
+        args = new String[]{"C:\\Windows\\System32\\", "2"};
         app.runDiskAnalyzer(args); // Top-5 файлов с самым большим размером
 
-        args = new String[]{"C:\\", "3"}; //
+        args = new String[]{"C:\\Windows\\System32\\", "3"};
         app.runDiskAnalyzer(args); // Средний размер файла в указанной директории или любой ее поддиректории
 
-        args = new String[]{"C:\\", "4"}; //
+        args = new String[]{"C:\\Windows\\System32\\", "4"};
         app.runDiskAnalyzer(args); // Количество файлов и папок разбитое по первым буквам алфавита
 
     }
