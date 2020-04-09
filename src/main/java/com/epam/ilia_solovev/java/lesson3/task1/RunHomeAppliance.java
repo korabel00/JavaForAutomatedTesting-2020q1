@@ -23,7 +23,6 @@
 
 package com.epam.ilia_solovev.java.lesson3.task1;
 
-import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.ApplianceIsOffException;
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.BadCompareException;
 import com.epam.ilia_solovev.java.lesson3.task1.exceptions.checked.WrongScreenSizeException;
 import com.epam.ilia_solovev.java.lesson3.task1.home_appliances.*;
