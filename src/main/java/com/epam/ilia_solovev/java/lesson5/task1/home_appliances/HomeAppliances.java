@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 public abstract class HomeAppliances implements Serializable {
 
-    private int powerConsumption;
-    private int powerConsumptionWhenOn;
+    private transient int powerConsumption;
+    private transient int powerConsumptionWhenOn;
     private boolean on;
     private Brand brand;
     private String model;

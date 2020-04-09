@@ -5,7 +5,7 @@ import com.epam.ilia_solovev.java.lesson5.task1.utils.Brand;
 
 public class WashingMachine extends HomeAppliances {
 
-    private int rpm;
+    private transient int rpm;
 
     public WashingMachine(int powerConsumption, Brand brand, String model, int rpm) {
         super(powerConsumption, brand, model);

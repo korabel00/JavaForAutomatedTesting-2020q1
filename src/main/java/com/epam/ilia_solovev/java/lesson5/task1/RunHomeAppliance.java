@@ -26,13 +26,12 @@ public class RunHomeAppliance {
         RunHomeAppliance app = new RunHomeAppliance();
         try {
             app.startApp();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    //Running an application
-    public void startApp() throws IOException {
+    public void startApp() throws IOException, ClassNotFoundException {
 
         int[] powerOfThings = new int[]{100, 200, 400};
         int numberOfAppliance = 3;
@@ -41,7 +40,7 @@ public class RunHomeAppliance {
         HomeAppliances[] homeAppliances = new HomeAppliances[numberOfAppliance];
         createArrayOfHomeAppliance(homeAppliances, powerOfThings);
         Serialize serialize = new Serialize();
-        //serialize.writeObjects(homeAppliances, fileForKeepingObjectStates);
+        serialize.writeObjects(homeAppliances, fileForKeepingObjectStates);
         serialize.readObjects(fileForKeepingObjectStates);
     }
 

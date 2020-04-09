@@ -6,8 +6,8 @@ import com.epam.ilia_solovev.java.lesson5.task1.utils.Brand;
 
 public class TV extends HomeAppliances implements Connectible {
 
-    private int screenSize;
-    private int defaultScreenSize = 32;
+    private transient int screenSize;
+    private transient int defaultScreenSize = 32;
 
     public TV(int powerConsumption, Brand brand, String model, int screenSize) throws WrongScreenSizeException {
         super(powerConsumption, brand, model);
