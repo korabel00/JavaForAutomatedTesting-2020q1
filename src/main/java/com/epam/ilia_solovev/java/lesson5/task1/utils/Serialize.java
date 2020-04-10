@@ -3,13 +3,11 @@ package com.epam.ilia_solovev.java.lesson5.task1.utils;
 import com.epam.ilia_solovev.java.lesson5.task1.home_appliances.HomeAppliances;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Serialize {
 
     public void writeObjects(HomeAppliances[] homeAppliances, String fileForKeepingObjectStates) throws IOException {
-     //   Path path = Paths.get(fileForKeepingObjectStates);
+
         FileOutputStream fileOutputStream = new FileOutputStream(fileForKeepingObjectStates);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(homeAppliances);
@@ -18,6 +16,7 @@ public class Serialize {
     }
 
     public void readObjects(String fileForKeepingObjectStates) throws IOException, ClassNotFoundException {
+
         FileInputStream fileInputStream = new FileInputStream(fileForKeepingObjectStates);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         HomeAppliances[] homeAppliances = (HomeAppliances[]) objectInputStream.readObject();
