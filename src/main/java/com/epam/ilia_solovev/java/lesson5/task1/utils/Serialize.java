@@ -26,5 +26,6 @@ public class Serialize {
             System.out.println(thing.getClass().getSimpleName() + " " + thing.getBrand() + " " + thing.getModel() +
                     " " + thing.getPowerConsumption());
         }
+        objectInputStream.close();
     }
 }
