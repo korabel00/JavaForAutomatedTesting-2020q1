@@ -1,6 +1,3 @@
-
-
-
 package com.epam.ilia_solovev.java.lesson5.task2;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +6,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class DiskAnalyzer {
 
@@ -35,14 +31,15 @@ public class DiskAnalyzer {
         }
     }
 
-    private ArrayList<String> retrieveDir(File dir, ArrayList<String> fileNamesInStrings) {
+    private ArrayList<String> getListOfFilesInDirAndSubDir(File dir, ArrayList<String> fileNamesInStrings) {
 
+        //рекурсивное получение списка файлов в каталоге и подкаталогах
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             if (files != null) {
                 for (File file : files) {
                     if (file.isDirectory()) {
-                        retrieveDir(file, fileNamesInStrings);
+                        getListOfFilesInDirAndSubDir(file, fileNamesInStrings);
                     } else {
                         fileNamesInStrings.add(file.getName());
                     }
@@ -52,17 +49,37 @@ public class DiskAnalyzer {
         return fileNamesInStrings;
     }
 
+    private ArrayList<String> retrieveDirJava7(File dir, ArrayList<String> fileNamesInStrings) {
+
+        //Получение списка файлов способом из Java7
+        if (dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        getListOfFilesInDirAndSubDir(file, fileNamesInStrings);
+                    } else {
+                        fileNamesInStrings.add(file.getName());
+                    }
+                }
+            }
+        }
+        return fileNamesInStrings;
+    }
+
+
     private void findMaxNumberOfLettersInFileName(String[] args, String letterToFind) {
 
         ArrayList<String> fileNamesInStrings = new ArrayList<>();
-        ArrayList<String> listOfFileNames = retrieveDir(new File(args[0]), fileNamesInStrings);
-        System.out.println(listOfFileNames.size());
+        //вызываем метод рекурсивного сбора списка файлов
+        ArrayList<String> listOfFileNames = getListOfFilesInDirAndSubDir(new File(args[0]), fileNamesInStrings);
+        // System.out.println(listOfFileNames.size());
         int countLetter = 0;
         String fileWithMaxNumberOfLetters = null;
 
+        //считаем количество вхождений предоставленной буквы в имени файла
         for (String filename : listOfFileNames
         ) {
-
             if (StringUtils.countMatches(filename, letterToFind) > countLetter) {
                 countLetter = StringUtils.countMatches(filename, letterToFind);
                 fileWithMaxNumberOfLetters = filename;
