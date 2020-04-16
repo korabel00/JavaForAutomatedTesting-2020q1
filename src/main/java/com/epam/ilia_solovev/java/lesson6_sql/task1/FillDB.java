@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CreateDB {
+public class FillDB {
 
     private static final String URL = "jdbc:sqlserver://localhost:1433";
     private static final String INSTANCE = "instance=SQLEXPRESS";
@@ -13,7 +13,7 @@ public class CreateDB {
     private static final String DB_NAME = "VEpamke";
     private static final String CREDENTIALS = "integratedSecurity=true";
 
-    public static void createDBAndTables() {
+    public static void fillTables() {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -22,20 +22,17 @@ public class CreateDB {
             Class.forName(DRIVER);
             connection = getConnection();
 
-            preparedStatement = createDB(connection);
+            preparedStatement = fillTableUsers(connection);
             preparedStatement.execute();
 
-            preparedStatement = createTableUsers(connection);
-            preparedStatement.execute();
+            //        preparedStatement = fillTableFriendships(connection);
+            //        preparedStatement.execute();
 
-            preparedStatement = createTableFriendships(connection);
-            preparedStatement.execute();
+            //        preparedStatement = fillTablePosts(connection);
+            //        preparedStatement.execute();
 
-            preparedStatement = createTablePosts(connection);
-            preparedStatement.execute();
-
-            preparedStatement = createTableLikes(connection);
-            preparedStatement.execute();
+            //        preparedStatement = fillTableLikes(connection);
+            //        preparedStatement.execute();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -66,27 +63,20 @@ public class CreateDB {
     }
 
 
-    private static PreparedStatement createDB(Connection connection) throws SQLException {
-        return connection.prepareStatement("IF DB_ID('" + DB_NAME + "') IS NULL " +
-                "CREATE DATABASE " + DB_NAME);
-    }
-
     // Users (id, name, surname, birthdate)
-    private static PreparedStatement createTableUsers(Connection connection) throws SQLException {
+    private static PreparedStatement fillTableUsers(Connection connection) throws SQLException {
 
         String tableName = "Users";
 
         return connection.prepareStatement("USE " + DB_NAME + "; " +
-                "IF OBJECT_ID('" + tableName + "') IS NULL " +
-                "CREATE TABLE " + tableName + "(" +
-                "ID int IDENTITY(1,1) PRIMARY KEY, " +
-                "Name varchar(20), " +
-                "Surname varchar(30), " +
-                "Birthdate date);");
+                "IF OBJECT_ID('" + tableName + "') IS NOT NULL " +
+                "INSERT INTO " + tableName +
+                "(Name, Surname, Birthdate) VALUES " +
+                "('Ivan', 'Ivanov', '1981-12-25');");
     }
 
     // Friendships (userid1, userid2,timestamp)
-    private static PreparedStatement createTableFriendships(Connection connection) throws SQLException {
+    private static PreparedStatement fillTableFriendships(Connection connection) throws SQLException {
 
         String tableName = "Friendships";
 
@@ -100,7 +90,7 @@ public class CreateDB {
     }
 
     // Posts(id, userId, text, timestamp)
-    private static PreparedStatement createTablePosts(Connection connection) throws SQLException {
+    private static PreparedStatement fillTablePosts(Connection connection) throws SQLException {
 
         String tableName = "Posts";
 
@@ -115,7 +105,7 @@ public class CreateDB {
     }
 
     // Likes (postid, userid, timestamp)
-    private static PreparedStatement createTableLikes(Connection connection) throws SQLException {
+    private static PreparedStatement fillTableLikes(Connection connection) throws SQLException {
 
         String tableName = "Likes";
 
@@ -128,5 +118,3 @@ public class CreateDB {
                 "FOREIGN KEY(UserId) REFERENCES Users (ID));");
     }
 }
-
-

@@ -18,5 +18,6 @@ public class RunSQLHandler {
     public static void main(String[] args) {
 
         CreateDB.createDBAndTables();
+        FillDB.fillTables();
     }
 }  
