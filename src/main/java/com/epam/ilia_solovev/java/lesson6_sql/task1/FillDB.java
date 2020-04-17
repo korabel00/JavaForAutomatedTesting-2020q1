@@ -1,9 +1,17 @@
 package com.epam.ilia_solovev.java.lesson6_sql.task1;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.stream.Stream;
 
 public class FillDB {
 
@@ -34,7 +42,7 @@ public class FillDB {
             //        preparedStatement = fillTableLikes(connection);
             //        preparedStatement.execute();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
 
         } finally {
@@ -64,15 +72,35 @@ public class FillDB {
 
 
     // Users (id, name, surname, birthdate)
-    private static PreparedStatement fillTableUsers(Connection connection) throws SQLException {
+    private static PreparedStatement fillTableUsers(Connection connection) throws SQLException, IOException {
 
         String tableName = "Users";
+        Path csvFile = Paths.get("src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\date\\Users.csv");
+        BufferedReader bufferedReader = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        String stringToPrepare = "USE " + DB_NAME + "; " +
+                "IF OBJECT_ID('" + tableName + "') IS NOT NULL ";
+        StringBuilder stringToInsert = null;
+        try (Stream<String> stream = Files.lines(csvFile)) {
+            stream.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+/*
 
-        return connection.prepareStatement("USE " + DB_NAME + "; " +
-                "IF OBJECT_ID('" + tableName + "') IS NOT NULL " +
-                "INSERT INTO " + tableName +
-                "(Name, Surname, Birthdate) VALUES " +
-                "('Ivan', 'Ivanov', '1981-12-25');");
+        while ((line = Files.readString(csvFile) != null) {
+            String[] lineReader = line.split(cvsSplitBy);
+            stringToInsert.append("INSERT INTO ")
+                    .append(tableName)
+                    .append("(Name, Surname, Birthdate) VALUES ")
+                    .append("('").append(lineReader[0]).append("', '")
+                                 .append(lineReader[1]).append("', '")
+                                 .append(lineReader[2]).append("');");
+        }
+*/
+
+        return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
     }
 
     // Friendships (userid1, userid2,timestamp)
