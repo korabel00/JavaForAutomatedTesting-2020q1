@@ -33,14 +33,14 @@ public class FillDB {
             preparedStatement = fillTableUsers(connection);
             preparedStatement.execute();
 
-            //        preparedStatement = fillTableFriendships(connection);
-            //        preparedStatement.execute();
+            preparedStatement = fillTableFriendships(connection);
+            preparedStatement.execute();
 
-            //        preparedStatement = fillTablePosts(connection);
-            //        preparedStatement.execute();
+            preparedStatement = fillTablePosts(connection);
+            preparedStatement.execute();
 
-            //        preparedStatement = fillTableLikes(connection);
-            //        preparedStatement.execute();
+            preparedStatement = fillTableLikes(connection);
+            preparedStatement.execute();
 
         } catch (SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
@@ -58,6 +58,7 @@ public class FillDB {
             if (connection != null) {
                 try {
                     connection.close();
+                    System.out.println("Close connection...");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -66,83 +67,114 @@ public class FillDB {
     }
 
     private static Connection getConnection() throws SQLException {
-        System.out.println(URL + ";" + INSTANCE + ";" + CREDENTIALS);
+        System.out.println("Connecting to " + URL + ";" + INSTANCE + ";" + CREDENTIALS + "...");
         return DriverManager.getConnection(URL + ";" + INSTANCE + ";" + CREDENTIALS);
     }
 
-
-    // Users (id, name, surname, birthdate)
     private static PreparedStatement fillTableUsers(Connection connection) throws SQLException, IOException {
 
         String tableName = "Users";
-        Path csvFile = Paths.get("src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\date\\Users.csv");
-        BufferedReader bufferedReader = null;
+        String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Users.csv";
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
         String line = "";
         String cvsSplitBy = ";";
         String stringToPrepare = "USE " + DB_NAME + "; " +
-                "IF OBJECT_ID('" + tableName + "') IS NOT NULL ";
-        StringBuilder stringToInsert = null;
-        try (Stream<String> stream = Files.lines(csvFile)) {
-            stream.forEach(System.out::println);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-/*
+                "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Users) = 0 BEGIN\n";
+        StringBuilder stringToInsert = new StringBuilder();
 
-        while ((line = Files.readString(csvFile) != null) {
-            String[] lineReader = line.split(cvsSplitBy);
+        bufferedReader.readLine();//skip first line with titles
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] columns = line.split(cvsSplitBy);
             stringToInsert.append("INSERT INTO ")
                     .append(tableName)
                     .append("(Name, Surname, Birthdate) VALUES ")
-                    .append("('").append(lineReader[0]).append("', '")
-                                 .append(lineReader[1]).append("', '")
-                                 .append(lineReader[2]).append("');");
+                    .append("('").append(columns[0]).append("', '")
+                    .append(columns[1]).append("', '")
+                    .append(columns[2]).append("'); \n");
         }
-*/
-
+        stringToInsert.append("END\n");
+        System.out.println("Put data into Users Table...");
+        System.out.println(stringToPrepare + stringToInsert.toString());
         return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
     }
 
-    // Friendships (userid1, userid2,timestamp)
-    private static PreparedStatement fillTableFriendships(Connection connection) throws SQLException {
+    private static PreparedStatement fillTableFriendships(Connection connection) throws SQLException, IOException {
 
         String tableName = "Friendships";
+        String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Friendships.csv";
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
+        String line = "";
+        String cvsSplitBy = ";";
+        String stringToPrepare = "USE " + DB_NAME + "; " +
+                "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Friendships) = 0 BEGIN\n";
+        StringBuilder stringToInsert = new StringBuilder();
+        bufferedReader.readLine();//skip first line with titles
 
-        return connection.prepareStatement("USE " + DB_NAME + "; " +
-                "IF OBJECT_ID('" + tableName + "') IS NULL " +
-                "CREATE TABLE " + tableName + "(" +
-                "UserId1 int, " +
-                "UserId2 int, " +
-                "Timestamp datetime, " +
-                "FOREIGN KEY(UserId1) REFERENCES Users (ID));");
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] columns = line.split(cvsSplitBy);
+            stringToInsert.append("INSERT INTO ")
+                    .append(tableName)
+                    .append("(UserId, FriendsNumber, Date) VALUES ")
+                    .append("('").append(columns[0]).append("', '")
+                    .append(columns[1]).append("', '")
+                    .append(columns[2]).append("'); \n");
+        }
+        stringToInsert.append("END\n");
+        System.out.println("Put data into Friendships Table...");
+        System.out.println(stringToPrepare + stringToInsert.toString());
+        return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
     }
 
-    // Posts(id, userId, text, timestamp)
-    private static PreparedStatement fillTablePosts(Connection connection) throws SQLException {
+    private static PreparedStatement fillTablePosts(Connection connection) throws SQLException, IOException {
 
         String tableName = "Posts";
+        String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Posts.csv";
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
+        String line = "";
+        String cvsSplitBy = ";";
+        String stringToPrepare = "USE " + DB_NAME + "; " +
+                "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Posts) = 0 BEGIN\n";
+        StringBuilder stringToInsert = new StringBuilder();
+        bufferedReader.readLine();//skip first line with titles
 
-        return connection.prepareStatement("USE " + DB_NAME + "; " +
-                "IF OBJECT_ID('" + tableName + "') IS NULL " +
-                "CREATE TABLE " + tableName + "(" +
-                "ID int PRIMARY KEY, " +
-                "UserId int, " +
-                "Text varchar(255), " +
-                "Timestamp datetime, " +
-                "FOREIGN KEY(UserId) REFERENCES Users (ID));");
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] columns = line.split(cvsSplitBy);
+            stringToInsert.append("INSERT INTO ")
+                    .append(tableName)
+                    .append("(PostId, UserId) VALUES ")
+                    .append("('").append(columns[0]).append("', '")
+                    .append(columns[1]).append("'); \n");
+        }
+        stringToInsert.append("END\n");
+        System.out.println("Put data into Posts Table...");
+        System.out.println(stringToPrepare + stringToInsert.toString());
+        return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
     }
 
-    // Likes (postid, userid, timestamp)
-    private static PreparedStatement fillTableLikes(Connection connection) throws SQLException {
+    private static PreparedStatement fillTableLikes(Connection connection) throws SQLException, IOException {
 
         String tableName = "Likes";
+        String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Likes.csv";
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
+        String line = "";
+        String cvsSplitBy = ";";
+        String stringToPrepare = "USE " + DB_NAME + "; " +
+                "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Likes) = 0 BEGIN\n";
+        StringBuilder stringToInsert = new StringBuilder();
+        bufferedReader.readLine();//skip first line with titles
 
-        return connection.prepareStatement("USE " + DB_NAME + "; " +
-                "IF OBJECT_ID('" + tableName + "') IS NULL " +
-                "CREATE TABLE " + tableName + "(" +
-                "PostId int PRIMARY KEY, " +
-                "UserId int, " +
-                "Timestamp datetime, " +
-                "FOREIGN KEY(UserId) REFERENCES Users (ID));");
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] columns = line.split(cvsSplitBy);
+            stringToInsert.append("INSERT INTO ")
+                    .append(tableName)
+                    .append("(PostId, LikesCount) VALUES ")
+                    .append("('").append(columns[0]).append("', '")
+                    .append(columns[1]).append("'); \n");
+        }
+        stringToInsert.append("END\n");
+        System.out.println("Put data into Likes Table...");
+        System.out.println(stringToPrepare + stringToInsert.toString());
+        return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
     }
 }

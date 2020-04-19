@@ -1,18 +1,18 @@
-
-
-
 package com.epam.ilia_solovev.java.lesson5_serilize_and_files.task2_files;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DiskAnalyzer {
+
+    private Path file = Paths.get("src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\DiskAnalyzerOutput.txt");
 
     public void runDiskAnalyzer(String[] args) {
 
