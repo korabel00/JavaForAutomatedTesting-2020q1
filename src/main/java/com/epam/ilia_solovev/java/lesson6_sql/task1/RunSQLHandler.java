@@ -6,7 +6,7 @@
         data), Posts(id, userId), Likes (postid, likes).
         Заполните таблицы осмысленными данными. Кроме этого, вы должны написать класс, который при наличии
         данных в вашей БД печатает список уникальных имен пользователей, у которых
-        было больше 3 друзей в марте 2015 года и количество лайков каждого
+        было >= 3 друзей в марте 2015 года и количество лайков каждого
         поста (за весь период) выше среднего. Отчет выводится на консоль. Все
         действия должны быть воплощены при помощи JDBC.*/
 
@@ -16,8 +16,8 @@ public class RunSQLHandler {
 
     public static void main(String[] args) {
 
-        CreateDB.createDBAndTables();
-        FillDB.fillTables();
-        SelectResultFromDB.executeSelect();
+        CreateDB.createDBAndTables(); //создаем базу и таблицы
+        FillDB.fillTables(); //заполняем базу и таблицы данными из файлов
+        SelectResultFromDB.executeSelect(); //получаем выборку из базы данных в соответствии с условиями задачи
     }
 }  

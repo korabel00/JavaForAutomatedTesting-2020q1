@@ -1,22 +1,24 @@
 package com.epam.ilia_solovev.java.lesson6_sql.task1;
 
+import com.epam.ilia_solovev.java.lesson6_sql.task1.utils.Connectible;
 import com.epam.ilia_solovev.java.lesson6_sql.task1.utils.DBSettings;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CreateDB {
+public class CreateDB implements Connectible {
 
     public static void createDBAndTables() {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
+        // каждый раз при взаимодействии с базой устанавливаем соединение, создаем и исполняем подготовленный запрос
+        // а потом закрываем подготовленный запрос и соединение
         try {
             Class.forName(DBSettings.DRIVER.getValue());
-            connection = getConnection();
+            connection = Connectible.getConnection();
 
             preparedStatement = createDB(connection);
             preparedStatement.execute();
@@ -57,13 +59,9 @@ public class CreateDB {
         }
     }
 
-    private static Connection getConnection() throws SQLException {
-        System.out.println("Connecting to " + DBSettings.URL.getValue() + ";" + DBSettings.INSTANCE.getValue() + ";" + DBSettings.CREDENTIALS.getValue() + "...");
-        return DriverManager.getConnection(DBSettings.URL.getValue() + ";" + DBSettings.INSTANCE.getValue() + ";" + DBSettings.CREDENTIALS.getValue());
-    }
-
-
     private static PreparedStatement createDB(Connection connection) throws SQLException {
+
+        //метод возвращает подготовленный запрос для создания базы данных
         System.out.println("Create " + DBSettings.DB_NAME.getValue() + " Database...");
         return connection.prepareStatement("IF DB_ID('" + DBSettings.DB_NAME.getValue() + "') IS NULL " +
                 "CREATE DATABASE " + DBSettings.DB_NAME.getValue());
@@ -71,6 +69,7 @@ public class CreateDB {
 
     private static PreparedStatement createTableUsers(Connection connection) throws SQLException {
 
+        //метод возвращает подготовленный запрос для создания таблицы Users - выполняется запрос в основнм методе
         String tableName = "Users";
 
         System.out.println("Create Users Table...");
@@ -85,6 +84,7 @@ public class CreateDB {
 
     private static PreparedStatement createTableFriendships(Connection connection) throws SQLException {
 
+        //метод возвращает подготовленный запрос для создания таблицы Friendships
         String tableName = "Friendships";
 
         System.out.println("Create Friendships Table...");
@@ -99,6 +99,7 @@ public class CreateDB {
 
     private static PreparedStatement createTablePosts(Connection connection) throws SQLException {
 
+        //метод возвращает подготовленный запрос для создания таблицы Posts
         String tableName = "Posts";
 
         System.out.println("Create Posts Table...");
@@ -112,6 +113,7 @@ public class CreateDB {
 
     private static PreparedStatement createTableLikes(Connection connection) throws SQLException {
 
+        //метод возвращает подготовленный запрос для создания таблицы Likes
         String tableName = "Likes";
 
         System.out.println("Create Likes Table...");

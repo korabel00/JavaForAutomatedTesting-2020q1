@@ -9,14 +9,14 @@
 сериализации/десереализации.
  */
 
-package com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze;
+package com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize;
 
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.exceptions.checked.BadCompareException;
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.exceptions.checked.WrongScreenSizeException;
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.home_appliances.*;
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.utils.Brand;
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.utils.Color;
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.utils.Serialize;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.exceptions.checked.BadCompareException;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.exceptions.checked.WrongScreenSizeException;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.home_appliances.*;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.utils.Brand;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.utils.Color;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.utils.Serialize;
 
 import java.io.IOException;
 

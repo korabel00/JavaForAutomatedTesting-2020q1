@@ -1,14 +1,11 @@
 package com.epam.ilia_solovev.java.lesson6_sql.task1;
 
+import com.epam.ilia_solovev.java.lesson6_sql.task1.utils.Connectible;
+import com.epam.ilia_solovev.java.lesson6_sql.task1.utils.DBSettings;
+
 import java.sql.*;
 
-public class SelectResultFromDB {
-
-    private static final String URL = "jdbc:sqlserver://localhost:1433";
-    private static final String INSTANCE = "instance=SQLEXPRESS";
-    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DB_NAME = "VEpamke";
-    private static final String CREDENTIALS = "integratedSecurity=true";
+public class SelectResultFromDB implements Connectible {
 
     public static void executeSelect() {
 
@@ -16,8 +13,8 @@ public class SelectResultFromDB {
         PreparedStatement preparedStatement = null;
 
         try {
-            Class.forName(DRIVER);
-            connection = getConnection();
+            Class.forName(DBSettings.DRIVER.getValue());
+            connection = Connectible.getConnection();
 
             preparedStatement = sentSelect(connection);
             preparedStatement.execute();
@@ -49,17 +46,12 @@ public class SelectResultFromDB {
         }
     }
 
-    private static Connection getConnection() throws SQLException {
-        System.out.println("Connecting to " + URL + ";" + INSTANCE + ";" + CREDENTIALS + "...");
-        return DriverManager.getConnection(URL + ";" + INSTANCE + ";" + CREDENTIALS);
-    }
-
-
     private static PreparedStatement sentSelect(Connection connection) throws SQLException {
 
-        System.out.println("Sending SELECT to the DB " + DB_NAME + " Database...");
-        String stringToPrepare = "IF DB_ID('" + DB_NAME + "') IS NOT NULL " +
-                "USE " + DB_NAME + "\n" +
+        //посылаем возвращаем подготовленный SELECT, исполним дальше - в основном методе
+        System.out.println("Sending SELECT to the DB " + DBSettings.DB_NAME.getValue() + " Database...");
+        String stringToPrepare = "IF DB_ID('" + DBSettings.DB_NAME.getValue() + "') IS NOT NULL " +
+                "USE " + DBSettings.DB_NAME.getValue() + "\n" +
                 "SELECT ID, Name, Surname, Birthdate, FriendsNumber, Date, Likes.PostId, LikesCount FROM Users\n" +
                 "JOIN Friendships ON Friendships.UserId = Users.ID\n" +
                 "JOIN Posts ON Posts.UserId = Users.ID\n" +
@@ -72,6 +64,7 @@ public class SelectResultFromDB {
 
     private static void printResultOfSelect (ResultSet resultSet) throws SQLException {
 
+        //выводим результаты SELECT
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         int columnsNumber = resultSetMetaData.getColumnCount();
         System.out.println();
@@ -81,7 +74,7 @@ public class SelectResultFromDB {
                 String columnValue = resultSet.getString(i);
                 System.out.print(resultSetMetaData.getColumnName(i) + ": " + columnValue);
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 }

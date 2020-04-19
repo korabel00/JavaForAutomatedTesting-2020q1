@@ -1,7 +1,7 @@
-package com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.home_appliances;
+package com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.home_appliances;
 
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.exceptions.checked.ApplianceIsOffException;
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.utils.Brand;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.exceptions.checked.ApplianceIsOffException;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.utils.Brand;
 
 public class Computer extends HomeAppliances implements Connectible {
 

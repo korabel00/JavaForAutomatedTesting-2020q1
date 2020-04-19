@@ -1,25 +1,28 @@
-package com.epam.ilia_solovev.java.lesson5_serilize_and_files.task2_files;
+package com.epam.ilia_solovev.java.lesson5_serialize_and_files.task2_files;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DiskAnalyzer {
 
-    private Path file = Paths.get("src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\DiskAnalyzerOutput.txt");
+    private Path fileToWrite = Paths.get("src\\main\\java\\com\\epam\\ilia_solovev\\java\\" +
+            "lesson5_serialize_and_files\\task2_files\\DiskAnalyzerOutput.txt");
 
-    public void runDiskAnalyzer(String[] args) {
+    public void runDiskAnalyzer(String[] args) throws IOException {
 
         String letterToFind = "s";
 
         checkInput(args);
-
+        //во всех методах выводим результат на консоль и пишем в файл
         switch (args[1]) {
             case "1":
                 findMaxNumberOfLettersInFileName(args, letterToFind);
@@ -74,7 +77,7 @@ public class DiskAnalyzer {
     }
 
     //Поиск имени файла с максимальным количеством букв ‘s’ в имени, вывод пути к нему
-    private void findMaxNumberOfLettersInFileName(String[] args, String letterToFind) {
+    private void findMaxNumberOfLettersInFileName(String[] args, String letterToFind) throws IOException {
 
         //получаем коллекцию файлов
         ArrayList<File> files = new ArrayList<>();
@@ -91,12 +94,14 @@ public class DiskAnalyzer {
                 fileWithMaxNumberOfLetters = filename.getName();
             }
         }
-        System.out.println("The file with maximum '" + letterToFind + "' letter occurrence in " + args[0] + " is: "
-                + fileWithMaxNumberOfLetters);
+        String result = "The file with maximum '" + letterToFind + "' letter occurrence in " + args[0] + " is: "
+                + fileWithMaxNumberOfLetters + "\n";
+        System.out.print(result);
+        Files.writeString(fileToWrite, result);
     }
 
     // Top-5 файлов с самым большим размером
-    private void findTopFiveSizeFilesInDirectory(String[] args) {
+    private void findTopFiveSizeFilesInDirectory(String[] args) throws IOException {
 
         //получаем коллекцию файлов
         ArrayList<File> files = new ArrayList<>();
@@ -107,11 +112,19 @@ public class DiskAnalyzer {
 
         //выводим 5 первых результатов
         System.out.println("Top 5 file by size in " + args[0] + " :");
-        listOfFiles.stream().limit(5).forEach(file -> System.out.println(file.length() + " " + file.getName()));
+        Files.writeString(fileToWrite,"Top 5 file by size in " + args[0] + " :\n", StandardOpenOption.APPEND);
+        listOfFiles.stream().limit(5).forEach(file -> {
+            try {
+                Files.writeString(fileToWrite, file.length() + " " + file.getName() + "\n", StandardOpenOption.APPEND);
+                System.out.print(file.length() + " " + file.getName() + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     // Средний размер файла в указанной директории или любой ее поддиректории
-    private void countAverageFileSizeInDirectory(String[] args) {
+    private void countAverageFileSizeInDirectory(String[] args) throws IOException {
 
         long sumSizeOfFiles = 0;
 
@@ -129,12 +142,14 @@ public class DiskAnalyzer {
         //проверям что кол-во файлов совпадает с данными Windows
         //System.out.println(listOfFiles.size());
         //выводим средний размер файла
-        System.out.println("Average file size in " + args[0] + " is: " +
-                sumSizeOfFiles / listOfFiles.size());
+        String result = "Average file size in " + args[0] + " is: " +
+                sumSizeOfFiles / listOfFiles.size() + "\n";
+        System.out.print(result);
+        Files.writeString(fileToWrite,result, StandardOpenOption.APPEND);
     }
 
     //Количество файлов и папок разбитое по первым буквам алфавита (например на букву A – начинается 100 000 файлов и 200 папок)
-    private void countFilesAndDirsByFirstLetter(String[] args) {
+    private void countFilesAndDirsByFirstLetter(String[] args) throws IOException {
 
         //получаем коллекцию файлов и каталогов
         ArrayList<File> files = new ArrayList<>();
@@ -180,8 +195,9 @@ public class DiskAnalyzer {
         }
 
         //выводим коллекцию
-        System.out.println("Number of Files and Dirs by the first letter:");
-        System.out.println(filesAndDirsByFirstLetter);
+        String result = "Number of Files and Dirs by the first letter:\n" + filesAndDirsByFirstLetter + "\n";
+        System.out.print(result);
+        Files.writeString(fileToWrite, result, StandardOpenOption.APPEND);
     }
 
     private void checkInput(String[] args) {

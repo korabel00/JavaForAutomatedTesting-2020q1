@@ -1,4 +1,4 @@
-package com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.utils;
+package com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.utils;
 
 public enum Color {
 

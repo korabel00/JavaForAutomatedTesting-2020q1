@@ -1,5 +1,8 @@
 package com.epam.ilia_solovev.java.lesson6_sql.task1;
 
+import com.epam.ilia_solovev.java.lesson6_sql.task1.utils.Connectible;
+import com.epam.ilia_solovev.java.lesson6_sql.task1.utils.DBSettings;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,13 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.stream.Stream;
 
-public class FillDB {
-
-    private static final String URL = "jdbc:sqlserver://localhost:1433";
-    private static final String INSTANCE = "instance=SQLEXPRESS";
-    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DB_NAME = "VEpamke";
-    private static final String CREDENTIALS = "integratedSecurity=true";
+public class FillDB implements Connectible {
 
     public static void fillTables() {
 
@@ -27,8 +24,8 @@ public class FillDB {
         PreparedStatement preparedStatement = null;
 
         try {
-            Class.forName(DRIVER);
-            connection = getConnection();
+            Class.forName(DBSettings.DRIVER.getValue());
+            connection = Connectible.getConnection();
 
             preparedStatement = fillTableUsers(connection);
             preparedStatement.execute();
@@ -66,19 +63,17 @@ public class FillDB {
         }
     }
 
-    private static Connection getConnection() throws SQLException {
-        System.out.println("Connecting to " + URL + ";" + INSTANCE + ";" + CREDENTIALS + "...");
-        return DriverManager.getConnection(URL + ";" + INSTANCE + ";" + CREDENTIALS);
-    }
-
     private static PreparedStatement fillTableUsers(Connection connection) throws SQLException, IOException {
 
+        //метод возвращает подготовленный запрос дл€ заполнени€ таблицы Users из файла - выполн€етс€ запрос в основном методе
         String tableName = "Users";
         String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Users.csv";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
-        String line = "";
+        String line;
         String cvsSplitBy = ";";
-        String stringToPrepare = "USE " + DB_NAME + "; " +
+
+        //“олько если таблица существует и пуста€ добавл€ем в нее значени€
+        String stringToPrepare = "USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Users) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
 
@@ -101,12 +96,15 @@ public class FillDB {
 
     private static PreparedStatement fillTableFriendships(Connection connection) throws SQLException, IOException {
 
+        //метод возвращает подготовленный запрос дл€ заполнени€ таблицы Friendships из файла
         String tableName = "Friendships";
         String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Friendships.csv";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
-        String line = "";
+        String line;
         String cvsSplitBy = ";";
-        String stringToPrepare = "USE " + DB_NAME + "; " +
+
+        //“олько если таблица существует и пуста€ добавл€ем в нее значени€
+        String stringToPrepare = "USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Friendships) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
         bufferedReader.readLine();//skip first line with titles
@@ -128,12 +126,15 @@ public class FillDB {
 
     private static PreparedStatement fillTablePosts(Connection connection) throws SQLException, IOException {
 
+        //метод возвращает подготовленный запрос дл€ заполнени€ таблицы Posts из файла
         String tableName = "Posts";
         String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Posts.csv";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
-        String line = "";
+        String line;
         String cvsSplitBy = ";";
-        String stringToPrepare = "USE " + DB_NAME + "; " +
+
+        //“олько если таблица существует и пуста€ добавл€ем в нее значени€
+        String stringToPrepare = "USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Posts) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
         bufferedReader.readLine();//skip first line with titles
@@ -154,12 +155,15 @@ public class FillDB {
 
     private static PreparedStatement fillTableLikes(Connection connection) throws SQLException, IOException {
 
+        //метод возвращает подготовленный запрос дл€ заполнени€ таблицы Likes из файла
         String tableName = "Likes";
         String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Likes.csv";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
-        String line = "";
+        String line;
         String cvsSplitBy = ";";
-        String stringToPrepare = "USE " + DB_NAME + "; " +
+
+        //“олько если таблица существует и пуста€ добавл€ем в нее значени€
+        String stringToPrepare = "USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Likes) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
         bufferedReader.readLine();//skip first line with titles

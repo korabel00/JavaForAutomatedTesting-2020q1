@@ -1,6 +1,6 @@
-package com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.exceptions.checked;
+package com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.exceptions.checked;
 
-import com.epam.ilia_solovev.java.lesson5_serilize_and_files.task1_serialiaze.utils.Color;
+import com.epam.ilia_solovev.java.lesson5_serialize_and_files.task1_serialize.utils.Color;
 
 final public class BadCompareException extends Checked {
 
