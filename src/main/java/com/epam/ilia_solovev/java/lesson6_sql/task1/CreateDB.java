@@ -59,6 +59,14 @@ public class CreateDB implements Connectible {
         }
     }
 
+    private static PreparedStatement deleteDB(Connection connection) throws SQLException {
+
+        //метод возвращает подготовленный запрос для удаления базы данных
+        System.out.println("Delete " + DBSettings.DB_NAME.getValue() + " Database...");
+        return connection.prepareStatement("IF DB_ID('" + DBSettings.DB_NAME.getValue() + "') IS NOT NULL " +
+                "DROP DATABASE " + DBSettings.DB_NAME.getValue());
+    }
+
     private static PreparedStatement createDB(Connection connection) throws SQLException {
 
         //метод возвращает подготовленный запрос для создания базы данных
@@ -91,10 +99,10 @@ public class CreateDB implements Connectible {
         return connection.prepareStatement("USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NULL " +
                 "CREATE TABLE " + tableName + "(" +
-                "UserId int, " +
-                "FriendsNumber int, " +
-                "Date date, " +
-                "FOREIGN KEY(UserId) REFERENCES Users (ID));");
+                "UserId1 int, " +
+                "UserId2 int, " +
+                "Timestamp datetime, " +
+                "FOREIGN KEY(UserId1) REFERENCES Users (ID));");
     }
 
     private static PreparedStatement createTablePosts(Connection connection) throws SQLException {
@@ -106,8 +114,10 @@ public class CreateDB implements Connectible {
         return connection.prepareStatement("USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NULL " +
                 "CREATE TABLE " + tableName + "(" +
-                "PostId int PRIMARY KEY, " +
+                "ID int IDENTITY(1,1) PRIMARY KEY, " +
                 "UserId int, " +
+                "Text varchar(200), " +
+                "Timestamp datetime, " +
                 "FOREIGN KEY(UserId) REFERENCES Users (ID));");
     }
 
@@ -120,9 +130,11 @@ public class CreateDB implements Connectible {
         return connection.prepareStatement("USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NULL " +
                 "CREATE TABLE " + tableName + "(" +
-                "PostId int PRIMARY KEY, " +
-                "LikesCount int, " +
-                "FOREIGN KEY(PostId) REFERENCES Posts (PostId));");
+                "PostId int, " +
+                "UserId int, " +
+                "Timestamp datetime, " +
+                "FOREIGN KEY(UserId) REFERENCES Users (ID), " +
+                "FOREIGN KEY(PostId) REFERENCES Posts (ID));");
     }
 }
 
