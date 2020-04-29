@@ -18,6 +18,6 @@ public class RunSQLHandler {
 
         CreateDB.createDBAndTables(); //создаем базу и таблицы
         FillDB.fillTables(); //заполняем базу и таблицы данными из файлов
-      //  SelectResultFromDB.executeSelect(); //получаем выборку из базы данных в соответствии с условиями задачи
+        SelectResultFromDB.executeSelect(); //получаем выборку из базы данных в соответствии с условиями задачи
     }
 }  

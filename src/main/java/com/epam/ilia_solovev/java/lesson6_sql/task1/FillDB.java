@@ -16,6 +16,9 @@ import java.util.*;
 
 public class FillDB implements Connectible {
 
+    static int userCollectionLength;
+    static int postsCollectionLength;
+
     public static void fillTables() {
 
         Connection connection = null;
@@ -28,14 +31,14 @@ public class FillDB implements Connectible {
             preparedStatement = fillTableUsers(connection);
             preparedStatement.execute();
 
-/*            preparedStatement = fillTableFriendships(connection);
-            preparedStatement.execute();*/
+            preparedStatement = fillTableFriendships(connection);
+            preparedStatement.execute();
 
             preparedStatement = fillTablePosts(connection);
             preparedStatement.execute();
 
-/*            preparedStatement = fillTableLikes(connection);
-            preparedStatement.execute();*/
+            preparedStatement = fillTableLikes(connection);
+            preparedStatement.execute();
 
         } catch (SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
@@ -70,8 +73,8 @@ public class FillDB implements Connectible {
         String fileWithSurnamesPath = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Surnames.csv";
 
         //полчаем 2 коллекции и именами и фамилиями из файлов и перемешиваем их
-        ArrayList<String> namesCollection =  readFileAndShuffle(fileWithNamesPath);
-        ArrayList<String> surnamesCollection =  readFileAndShuffle(fileWithSurnamesPath);
+        ArrayList<String> namesCollection = readFileAndShuffle(fileWithNamesPath);
+        ArrayList<String> surnamesCollection = readFileAndShuffle(fileWithSurnamesPath);
         StringBuilder stringToInsert = new StringBuilder();
 
         //Только если таблица существует и пустая добавляем в нее значения
@@ -79,8 +82,8 @@ public class FillDB implements Connectible {
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Users) = 0 BEGIN\n";
 
         //записываем в таблицу имена и фамилии из коллекций + генерируем дату рождения случайным образом
-        int collectionLength =  namesCollection.size();
-        for (int i = 0; i < collectionLength; i++) {
+        userCollectionLength = namesCollection.size();
+        for (int i = 0; i < userCollectionLength; i++) {
             stringToInsert.append("INSERT INTO ")
                     .append(tableName)
                     .append("(Name, Surname, Birthdate) VALUES ")
@@ -97,7 +100,7 @@ public class FillDB implements Connectible {
     private static PreparedStatement fillTableFriendships(Connection connection) throws SQLException, IOException {
 
         //метод возвращает подготовленный запрос для заполнения таблицы Friendships из файла
-        //Friendships (UserId1, UserId2 int, Timestamp)
+        //Friendships (UserId1, UserId2, Timestamp)
         String tableName = "Friendships";
 
         //Только если таблица существует и пустая добавляем в нее значения
@@ -105,16 +108,14 @@ public class FillDB implements Connectible {
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Friendships) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
 
-
-/*        while ((line = bufferedReader.readLine()) != null) {
-            String[] columns = line.split(cvsSplitBy);
+        //записываем в таблицу случайным образои "друзей" с другим UserId
+        for (int i = 0; i < userCollectionLength; i++) {
             stringToInsert.append("INSERT INTO ")
                     .append(tableName)
-                    .append("(UserId, FriendsNumber, Date) VALUES ")
-                    .append("('").append(columns[0]).append("', '")
-                    .append(columns[1]).append("', '")
-                    .append(columns[2]).append("'); \n");
-        }*/
+                    .append("(UserId2, Timestamp) VALUES ")
+                    .append("('").append(randBetween(1, userCollectionLength)).append("', '")
+                    .append(randomTimestamp()).append("'); \n");
+        }
         stringToInsert.append("END\n");
         System.out.println("Put data into Friendships Table...");
         System.out.println(stringToPrepare + stringToInsert.toString());
@@ -129,7 +130,7 @@ public class FillDB implements Connectible {
         String fileWithPostsPath = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Posts.csv";
 
         //полчаем 2 коллекции и именами и фамилиями из файлов и перемешиваем их
-        ArrayList<String> postsCollection =  readFileAndShuffle(fileWithPostsPath);
+        ArrayList<String> postsCollection = readFileAndShuffle(fileWithPostsPath);
         StringBuilder stringToInsert = new StringBuilder();
 
         //Только если таблица существует и пустая добавляем в нее значения
@@ -137,12 +138,12 @@ public class FillDB implements Connectible {
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Posts) = 0 BEGIN\n";
 
         //записываем в таблицу имена и фамилии из коллекций + генерируем дату рождения случайным образом
-        int collectionLength =  postsCollection.size();
-        for (int i = 0; i < collectionLength; i++) {
+        postsCollectionLength = postsCollection.size();
+        for (int i = 0; i < postsCollectionLength; i++) {
             stringToInsert.append("INSERT INTO ")
                     .append(tableName)
                     .append("(UserId, Text, Timestamp) VALUES ")
-                    .append("('").append(randBetween(1 ,20)).append("', '")
+                    .append("('").append(randBetween(1, 20)).append("', '")
                     .append(postsCollection.get(i)).append("', '")
                     .append(randomTimestamp()).append("'); \n");
         }
@@ -155,42 +156,26 @@ public class FillDB implements Connectible {
     private static PreparedStatement fillTableLikes(Connection connection) throws SQLException, IOException {
 
         //метод возвращает подготовленный запрос для заполнения таблицы Likes из файла
+        //PostId int, UserId int, Timestamp datetime
         String tableName = "Likes";
-        String csvFile = "src\\main\\java\\com\\epam\\ilia_solovev\\java\\lesson6_sql\\task1\\data\\Likes.csv";
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
-        String line;
-        String cvsSplitBy = ";";
 
         //Только если таблица существует и пустая добавляем в нее значения
         String stringToPrepare = "USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Likes) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
-        bufferedReader.readLine();//skip first line with titles
 
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] columns = line.split(cvsSplitBy);
+        for (int i = 0; i < postsCollectionLength; i++) {
             stringToInsert.append("INSERT INTO ")
                     .append(tableName)
-                    .append("(PostId, LikesCount) VALUES ")
-                    .append("('").append(columns[0]).append("', '")
-                    .append(columns[1]).append("'); \n");
+                    .append("(UserId, Timestamp) VALUES ")
+                    .append("('").append(randBetween(1, userCollectionLength)).append("', '")
+                    .append(randomTimestamp()).append("'); \n");
         }
         stringToInsert.append("END\n");
         System.out.println("Put data into Likes Table...");
         System.out.println(stringToPrepare + stringToInsert.toString());
         return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
-    }
 
-
-    public static String getRandomLineFromTheFile(File file) throws IOException {
-
-        //метод возвращает рандомную строку из файла
-        final RandomAccessFile f = new RandomAccessFile(file, "r");
-        final long randomLocation =  (long) (Math.random() * (f.length()));
-        System.out.println(randomLocation);
-        f.seek(randomLocation);
-        System.out.println(f.readLine());
-        return f.readLine();
     }
 
     public static ArrayList<String> readFileAndShuffle(String filePath) throws IOException {
@@ -224,7 +209,7 @@ public class FillDB implements Connectible {
         long diff = end - start + 1;
         Timestamp rand = new Timestamp(start + (long)(Math.random() * diff));
 
-        return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss:S").format(rand);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:S").format(rand);
     }
 
     public static int randBetween(int start, int end) {

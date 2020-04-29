@@ -52,12 +52,20 @@ public class SelectResultFromDB implements Connectible {
         System.out.println("Sending SELECT to the DB " + DBSettings.DB_NAME.getValue() + " Database...");
         String stringToPrepare = "IF DB_ID('" + DBSettings.DB_NAME.getValue() + "') IS NOT NULL " +
                 "USE " + DBSettings.DB_NAME.getValue() + "\n" +
-                "SELECT ID, Name, Surname, Birthdate, FriendsNumber, Date, Likes.PostId, LikesCount FROM Users\n" +
-                "JOIN Friendships ON Friendships.UserId = Users.ID\n" +
-                "JOIN Posts ON Posts.UserId = Users.ID\n" +
-                "JOIN Likes ON Likes.PostId = Posts.PostId\n" +
-                "WHERE Friendships.date BETWEEN '2015-03-01' AND '2015-03-31' AND FriendsNumber >= 3 AND LikesCount >= (SELECT AVG(LikesCount) FROM Likes);";
-
+                "SELECT DISTINCT A.Fullname FROM\n" +
+                "(SELECT u.Name + ' ' + u.Surname AS Fullname, COUNT(l.UserId) AS Likes, " +
+                "COUNT(l.userid) / COUNT(DISTINCT l.postid) AS AvgLikes FROM Users AS u\n" +
+                "INNER JOIN (select UserId2 FROM Friendships as fr where fr.timestamp > '2015-03-01 00:00:01'\n" +
+                "GROUP BY UserId2\n" +
+                "HAVING COUNT(fr.userid2) > 1) AS frnd\n" +
+                "ON frnd.userid2 = u.Id\n" +
+                "INNER JOIN Posts as p\n" +
+                "ON p.userID = u.Id\n" +
+                "INNER JOIN Likes as l\n" +
+                "ON l.postid = p.id\n" +
+                "GROUP BY u.name, u.surname, u.Birthdate,l.PostId) AS A\n" +
+                "GROUP BY A.Likes, A.Fullname, AvgLikes\n" +
+                "HAVING COUNT(A.Likes) > AvgLikes";
         System.out.println(stringToPrepare);
         return connection.prepareStatement(stringToPrepare);
     }

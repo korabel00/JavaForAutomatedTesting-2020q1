@@ -99,7 +99,7 @@ public class CreateDB implements Connectible {
         return connection.prepareStatement("USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NULL " +
                 "CREATE TABLE " + tableName + "(" +
-                "UserId1 int, " +
+                "UserId1 int IDENTITY(1,1) PRIMARY KEY, " +
                 "UserId2 int, " +
                 "Timestamp datetime, " +
                 "FOREIGN KEY(UserId1) REFERENCES Users (ID));");
@@ -130,11 +130,11 @@ public class CreateDB implements Connectible {
         return connection.prepareStatement("USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NULL " +
                 "CREATE TABLE " + tableName + "(" +
-                "PostId int, " +
+                "PostId int IDENTITY(1,1), " +
                 "UserId int, " +
-                "Timestamp datetime, " +
-                "FOREIGN KEY(UserId) REFERENCES Users (ID), " +
-                "FOREIGN KEY(PostId) REFERENCES Posts (ID));");
+                "Timestamp datetime);");
+              /*  "FOREIGN KEY(UserId) REFERENCES Users (ID), " +
+                "FOREIGN KEY(PostId) REFERENCES Posts (ID))*/
     }
 }
 
