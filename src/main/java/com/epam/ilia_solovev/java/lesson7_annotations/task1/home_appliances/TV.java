@@ -5,12 +5,13 @@ import com.epam.ilia_solovev.java.lesson7_annotations.task1.utils.Brand;
 
 public class TV extends HomeAppliances implements Connectible {
 
+    @ScreenSizeRangeCheck
     private int screenSize;
 
     public TV(int powerConsumption, Brand brand, String model, int screenSize) {
 
         super(powerConsumption, brand, model);
-        //  @ScreenSizeRangeCheck
+
         this.screenSize = screenSize;
     }
 

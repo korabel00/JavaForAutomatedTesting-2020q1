@@ -5,19 +5,19 @@ import com.epam.ilia_solovev.java.lesson7_annotations.task1.utils.Brand;
 
 public abstract class HomeAppliances {
 
+    @Zero
     private int powerConsumption;
     private int powerConsumptionWhenOn;
     private boolean on;
     private Brand brand;
+    @Empty
     private String model;
 
 
     public HomeAppliances(int powerConsumption, Brand brand, String model) {
 
-        // @ZeroPower
         this.powerConsumption = powerConsumption;
         this.brand = brand;
-        // @EmptyModel
         this.model = model;
     }
 
@@ -31,7 +31,7 @@ public abstract class HomeAppliances {
         this.powerConsumptionWhenOn = 0;
     }
 
-    //  @CanItWork
+    // @CanItWork
     public abstract void doWork();
 
     public boolean isOn() {

@@ -5,10 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// ��������� ��������� �������� ��������
 //TV screen size suppose to be from 25 to 85 inches
 
-@Target(ElementType.FIELD) // ����������� ������ � ����
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface ScreenSizeRangeCheck {
