@@ -9,7 +9,7 @@
 * При изменении количества элементов внутренний массив должен
 * пересоздаваться.*/
 
-package com.epam.ilia_solovev.java.lesson4_streams_and_collections.task1;
+package com.epam.ilia_solovev.java.lesson4_streams_and_collections.task1_generics;
 
 public class RunDynamicArray {
 

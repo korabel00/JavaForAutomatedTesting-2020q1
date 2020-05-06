@@ -1,4 +1,4 @@
-package com.epam.ilia_solovev.java.lesson4_streams_and_collections.task2;
+package com.epam.ilia_solovev.java.lesson4_streams_and_collections.task2_collections;
 
 public class RunJavaCollection {
 
