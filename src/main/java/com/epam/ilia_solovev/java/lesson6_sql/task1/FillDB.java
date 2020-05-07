@@ -158,24 +158,25 @@ public class FillDB implements Connectible {
         //метод возвращает подготовленный запрос дл€ заполнени€ таблицы Likes из файла
         //PostId int, UserId int, Timestamp datetime
         String tableName = "Likes";
+        int LikesNumber = 100;
 
         //“олько если таблица существует и пуста€ добавл€ем в нее значени€
         String stringToPrepare = "USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NOT NULL AND (SELECT COUNT(*) FROM Likes) = 0 BEGIN\n";
         StringBuilder stringToInsert = new StringBuilder();
 
-        for (int i = 0; i < postsCollectionLength; i++) {
+        for (int i = 0; i < LikesNumber; i++) {
             stringToInsert.append("INSERT INTO ")
                     .append(tableName)
-                    .append("(UserId, Timestamp) VALUES ")
-                    .append("('").append(randBetween(1, userCollectionLength)).append("', '")
+                    .append("(PostId, UserId, Timestamp) VALUES ")
+                    .append("('").append(randBetween(1, postsCollectionLength)).append("', '")
+                    .append(randBetween(1, userCollectionLength)).append("', '")
                     .append(randomTimestamp()).append("'); \n");
         }
         stringToInsert.append("END\n");
         System.out.println("Put data into Likes Table...");
         System.out.println(stringToPrepare + stringToInsert.toString());
         return connection.prepareStatement(stringToPrepare + stringToInsert.toString());
-
     }
 
     public static ArrayList<String> readFileAndShuffle(String filePath) throws IOException {

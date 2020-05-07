@@ -130,7 +130,7 @@ public class CreateDB implements Connectible {
         return connection.prepareStatement("USE " + DBSettings.DB_NAME.getValue() + "; " +
                 "IF OBJECT_ID('" + tableName + "') IS NULL " +
                 "CREATE TABLE " + tableName + "(" +
-                "PostId int IDENTITY(1,1), " +
+                "PostId int, " +
                 "UserId int, " +
                 "Timestamp datetime);");
               /*  "FOREIGN KEY(UserId) REFERENCES Users (ID), " +

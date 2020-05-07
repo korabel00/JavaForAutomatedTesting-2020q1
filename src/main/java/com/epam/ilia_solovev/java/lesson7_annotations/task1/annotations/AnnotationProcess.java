@@ -32,6 +32,11 @@ public class AnnotationProcess {
                 for (Annotation ann : annotations //обходим все аннотации всех полей экземпляра и его суперкласса
                 ) {
                     System.out.println(ann);
+                    //если для поля установлена Аннотация @Zero то проверяем что оно не должно быть <= 0
+                    if (ann.annotationType().equals(Zero.class) && (int) field.get(obj) <= 0) {
+                        System.out.println("You cannot set " + field.get(obj) + " to field " + field.getName());
+                    }
+
                 }
                 System.out.println();
             }
