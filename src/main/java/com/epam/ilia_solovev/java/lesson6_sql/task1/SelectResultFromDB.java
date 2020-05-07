@@ -65,7 +65,7 @@ public class SelectResultFromDB implements Connectible {
                 "ON l.postid = p.id\n" +
                 "GROUP BY u.name, u.surname, u.Birthdate,l.PostId) AS A\n" +
                 "GROUP BY A.Likes, A.Fullname, AvgLikes\n" +
-                "HAVING COUNT(A.Likes) >= AvgLikes";
+                "HAVING A.AvgLikes >= 2 and A.AvgLikes < 15";
         System.out.println(stringToPrepare);
         return connection.prepareStatement(stringToPrepare);
     }
