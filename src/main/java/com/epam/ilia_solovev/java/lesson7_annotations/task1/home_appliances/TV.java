@@ -1,11 +1,13 @@
 package com.epam.ilia_solovev.java.lesson7_annotations.task1.home_appliances;
 
-import com.epam.ilia_solovev.java.lesson7_annotations.task1.annotations.ScreenSizeRangeCheck;
+import com.epam.ilia_solovev.java.lesson7_annotations.task1.annotations.NoWiFi;
+import com.epam.ilia_solovev.java.lesson7_annotations.task1.annotations.RangeCheck;
 import com.epam.ilia_solovev.java.lesson7_annotations.task1.utils.Brand;
 
+@NoWiFi
 public class TV extends HomeAppliances implements Connectible {
 
-    @ScreenSizeRangeCheck
+    @RangeCheck
     private int screenSize;
 
     public TV(int powerConsumption, Brand brand, String model, int screenSize) {

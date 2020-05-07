@@ -19,30 +19,28 @@ import com.epam.ilia_solovev.java.lesson7_annotations.task1.annotations.Annotati
 import com.epam.ilia_solovev.java.lesson7_annotations.task1.home_appliances.*;
 import com.epam.ilia_solovev.java.lesson7_annotations.task1.utils.Brand;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class RunHomeAppliance {
 
     public static void main(String[] args) {
         RunHomeAppliance app = new RunHomeAppliance();
         try {
             app.startApp();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
     //Running an application
-    public void startApp() throws NoSuchFieldException, IllegalAccessException {
+    public void startApp() throws IllegalAccessException, InvocationTargetException {
 
         // создаем массив домашней электроники
         HomeAppliances[] homeAppliances = new HomeAppliances[3];
         createArrayOfHomeAppliance(homeAppliances);
         AnnotationProcess.annotationProcess(homeAppliances);
 
-        // аннотация @CanItWork не позволяет работать вещи, которая выключена
-        homeAppliances[2].turnOff();
-        homeAppliances[2].doWork();
+        // аннотация @NoWifi возвращает название класса у которого нету возможности соединения с WiFi
     }
 
     private void createArrayOfHomeAppliance(HomeAppliances[] homeAppliances) {

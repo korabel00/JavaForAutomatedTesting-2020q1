@@ -1,7 +1,9 @@
 package com.epam.ilia_solovev.java.lesson7_annotations.task1.home_appliances;
 
+import com.epam.ilia_solovev.java.lesson7_annotations.task1.annotations.NoWiFi;
 import com.epam.ilia_solovev.java.lesson7_annotations.task1.utils.Brand;
 
+@NoWiFi
 public class Computer extends HomeAppliances implements Connectible {
 
     public Computer(int powerConsumption, Brand brand, String model) {

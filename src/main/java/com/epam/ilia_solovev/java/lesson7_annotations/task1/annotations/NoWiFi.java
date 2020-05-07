@@ -5,11 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// Аннотация 3 не позволяет работать вещи, которая выключена
+// аннотация @NoWifi возвращает название класса у которого нету возможности соединения с WiFi
 
-@Target(ElementType.FIELD) // применяется только к полю
+@Target(ElementType.TYPE) // применяется только к методу
 @Retention(RetentionPolicy.RUNTIME)
 
-public @interface CanItWork {
+public @interface NoWiFi {
 
 }

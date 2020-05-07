@@ -5,10 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-//��������� �������������� � ��������� ��������
-//You cannot create an appliance with power <= 0
+//Нельзя заать пустое поле
 
-@Target(ElementType.FIELD) // ����������� ������ � ����
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface Empty {
