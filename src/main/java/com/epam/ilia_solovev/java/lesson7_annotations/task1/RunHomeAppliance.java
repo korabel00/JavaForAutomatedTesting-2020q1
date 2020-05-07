@@ -58,5 +58,4 @@ public class RunHomeAppliance {
         homeAppliances[1] = washingMachine;
         homeAppliances[2] = computer;
     }
-
 }
